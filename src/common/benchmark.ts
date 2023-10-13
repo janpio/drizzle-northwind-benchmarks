@@ -1,10 +1,8 @@
 import { bench, group, run } from "mitata";
 import Database from "better-sqlite3";
-import { asc, eq, ilike, like } from "drizzle-orm/expressions";
 import { alias } from "drizzle-orm/sqlite-core";
-import { BetterSQLite3Database, drizzle as drizzleDb } from "drizzle-orm/better-sqlite3/driver";
-import { sql } from "drizzle-orm";
-import { placeholder } from "drizzle-orm/sql";
+import { drizzle as drizzleDb } from "drizzle-orm/better-sqlite3";
+import { sql, asc, eq, like, placeholder } from "drizzle-orm";
 import { Database as DatabaseInit } from "../kysely/db";
 import knx from "knex";
 import { DataSource, Db, Like } from "typeorm";
@@ -1239,7 +1237,25 @@ const main = async () => {
   await typeorm.initialize();
   await getMikroOrmConnect();
 
-  await run();
+  await run({
+    // json: true,
+    colors: false,
+    min_max: false,
+    collect: false,
+    percentiles: false
+  });
+  /*
+  await run({
+    avg: true, // enable/disable avg column (default: true)
+    json: false, // enable/disable json output (default: false)
+    colors: true, // enable/disable colors (default: true)
+    min_max: true, // enable/disable min/max column (default: true)
+    collect: false, // enable/disable collecting returned values into an array during the benchmark (default: false)
+    percentiles: false, // enable/disable percentiles column (default: true)
+  });
+  */ 
+
+
   process.exit(1);
 };
 
